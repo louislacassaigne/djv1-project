@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerCharacter : MonoBehaviour, IDamageable
@@ -25,7 +26,9 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     [SerializeField] private GetUpgrade getUpgrade;
 
     [SerializeField] public bool isRollUnlocked = false;
-    public bool isSprintUnlocked = false;
+    [SerializeField] public bool isSprintUnlocked = false;
+
+    [SerializeField] private TextMeshProUGUI LevelUI;
 
     int defaultLayer;
     int invincibleLayer;
@@ -202,8 +205,9 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
         hitPoints -= value;
         if (hitPoints <= 0)
         {
-            // Game Over
-            Destroy(gameObject);
+            print("your score: " + level);
+            Time.timeScale = 0f;
+            gameObject.SetActive(false);
         }
     }
 
@@ -223,6 +227,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     public void levelUp()
     {
         level++;
+        LevelUI.text = level.ToString();
         getUpgrade.GenerateRewards();
         print("reward 1: " + getUpgrade.currentRewards[0]);
         print("reward 2: " + getUpgrade.currentRewards[1]);
