@@ -371,7 +371,6 @@
 "Assets/Scripts/PlayerCharacter.cs"
 "Assets/Scripts/PlayerHealthBar.cs"
 "Assets/Scripts/UIHealthBar.cs"
-"Assets/Scripts/UIKillCount.cs"
 "Assets/Scripts/UpgradeType.cs"
 "Assets/Scripts/XPBar.cs"
 -langversion:9.0

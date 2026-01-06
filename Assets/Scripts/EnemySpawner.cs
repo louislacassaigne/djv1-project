@@ -59,18 +59,18 @@ public class EnemySpawner : MonoBehaviour
     {
         float roll = Random.value;
 
-        // ----- DÉBUT : uniquement enemy 1
+        //VERY EASY
         if (player.level < 5)
             return enemyPrefab1;
 
-        // ----- NIVEAU MOYEN : enemy 2 arrive
+        //EASY
         if (player.level < 10)
         {
             if (roll < 0.7f) return enemyPrefab1;
             return enemyPrefab2;
         }
 
-        // ----- PLUS DUR : enemy 3 arrive
+        //MEDIUM
         if (player.level < 15)
         {
             if (roll < 0.4f) return enemyPrefab1;
@@ -78,6 +78,7 @@ public class EnemySpawner : MonoBehaviour
             return enemyPrefab3;
         }
 
+        //HARD
         if (player.level < 20)
         {
             if (roll < 0.2f) return enemyPrefab1;
@@ -86,6 +87,7 @@ public class EnemySpawner : MonoBehaviour
             return enemyPrefab4;
         }
 
+        //VERY HARD
         if (player.level < 25)
         {
             if (roll < 0.15f) return enemyPrefab1;
@@ -94,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
             return enemyPrefab4;
         }
 
-        
+        //HARDEST
         if (roll < 0.3f) return enemyPrefab2;
         if (roll < 0.6f) return enemyPrefab3;
         return enemyPrefab4;

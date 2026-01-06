@@ -75,7 +75,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
         }
         
 
-        // Direction de la caméra (sans inclinaison verticale)
+        // camera direction
         Vector3 cameraForward = cameraTransform.forward;
         cameraForward.y = 0f;
 
@@ -84,10 +84,9 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
         cameraForward.Normalize();
 
-        // Rotation cible
         Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
 
-        // Rotation progressive du joueur
+        // player rotation
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             targetRotation,
@@ -96,9 +95,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     
 
-        /* =========================
-         * 1️⃣ INPUT ZQSD
-         * ========================= */
+        // zqsd input
         float inputX = Input.GetAxisRaw("Horizontal"); // Q / D
         float inputZ = Input.GetAxisRaw("Vertical");   // Z / S
 
@@ -106,7 +103,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
         if (!_isRolling && isRollUnlocked && !_isJumping)
         {
-            // Gauche
+            //left
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Q))
             {
                 animator.SetTrigger("roll");
@@ -115,7 +112,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
                 _isRolling = true;
                 
             }
-            // Droite
+            //right
             else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.D))
             {
                 animator.SetTrigger("roll");
@@ -124,7 +121,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
                 _isRolling = true;
                 
             }
-            // Avant
+            //forward
             else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Z))
             {
                 animator.SetTrigger("forwardroll");
@@ -137,10 +134,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
 
 
-
-        /* =========================
-         * 2️⃣ Direction caméra (plan horizontal)
-         * ========================= */
+        //movement (relative to camera orientation)
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight   = cameraTransform.right;
 
@@ -150,28 +144,23 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
         camForward.Normalize();
         camRight.Normalize();
 
-        /* =========================
-         * 3️⃣ Direction de déplacement caméra-relative
-         * ========================= */
         Vector3 moveDirection =
             camForward * inputZ +
             camRight   * inputX;
 
-        /* =========================
-         * 4️⃣ Déplacement
-         * ========================= */
+        // moving the character
         if (moveDirection.sqrMagnitude > 0.001f && !_isRolling)
         {
             if (isSprintUnlocked && Input.GetKey(KeyCode.LeftShift))
             {
-                // Sprint
+                // sprint
                 _characterController.Move(
                     moveDirection.normalized * speed * 4f * Time.deltaTime
                 );
             }
             else
             {
-                // Marche normale
+                // march 
                 _characterController.Move(
                     moveDirection.normalized * speed * Time.deltaTime
                 );
@@ -181,7 +170,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
         if (_isRolling)
         {
-            // Déplacement continu pendant la roulade
+            // movement when rolling
             Vector3 moveDir = transform.TransformDirection(RollDirection);
             _characterController.Move(moveDir * rollSpeed * Time.deltaTime);
         }

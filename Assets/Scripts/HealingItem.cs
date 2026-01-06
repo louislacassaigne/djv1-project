@@ -6,8 +6,6 @@ public class HealingItem : MonoBehaviour
     private Animator animator;
     [SerializeField] private PlayerCharacter player;
 
-    // Start is called before the first frame update
-
     protected void Awake()
     {
         animator = GetComponent<Animator>();
@@ -18,7 +16,6 @@ public class HealingItem : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

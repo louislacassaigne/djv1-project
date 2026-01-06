@@ -6,7 +6,7 @@ public enum UpgradeType
     FireRate,
     MaxHealth,
 
-    // Spéciales
+    // Special upgrades
     Roll,
     Sprint
 }

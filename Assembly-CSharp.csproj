@@ -77,7 +77,6 @@
     <Compile Include="Assets\Scripts\HealingItem.cs" />
     <Compile Include="Assets\Scripts\XPBar.cs" />
     <Compile Include="Assets\Scripts\EnemyCharacter.cs" />
-    <Compile Include="Assets\Scripts\UIKillCount.cs" />
     <Compile Include="Assets\Scripts\UpgradeType.cs" />
   </ItemGroup>
   <ItemGroup>

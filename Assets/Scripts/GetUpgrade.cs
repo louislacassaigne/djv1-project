@@ -11,13 +11,9 @@ public class GetUpgrade : MonoBehaviour
 
     public UpgradeType[] currentRewards = new UpgradeType[2];
 
-    private UpgradeType? firstSpecial;   // choisie au niveau 5
-    private UpgradeType? secondSpecial;  // l’autre, niveau 15
+    private UpgradeType? firstSpecial;   // chosen at level 5
+    private UpgradeType? secondSpecial;  // the other one at level 15
 
-
-    // ------------------------------
-    // POOLS DE BASE
-    // ------------------------------
 
     private List<UpgradeType> baseUpgrades = new List<UpgradeType>
     {
@@ -28,7 +24,19 @@ public class GetUpgrade : MonoBehaviour
         UpgradeType.MaxHealth
     };
 
-    // ------------------------------
+    private Dictionary<UpgradeType, string> upgradeDescriptions = new Dictionary<UpgradeType, string>
+    {
+        { UpgradeType.BulletSpeed,  "Increases bullet speed by 80%" },
+        { UpgradeType.MoveSpeed,    "Increases all movement speed by 60%" },
+        { UpgradeType.BulletDamage, "Bullets deal +10 damage" },
+        { UpgradeType.FireRate,     "Shoot 30% faster" },
+        { UpgradeType.MaxHealth,    "Increase max health by 40" },
+
+        { UpgradeType.Roll,         "You can roll to dodge attacks with invicibility frames. Press ctrl + direction" },
+        { UpgradeType.Sprint,       "Hold Shift to move a lot faster. You can't shoot while sprinting" }
+    };
+
+
 
     public void GenerateRewards()
     {
@@ -37,27 +45,22 @@ public class GetUpgrade : MonoBehaviour
 
         UpgradeType? forced = null;
 
-        // -------- NIVEAU 5 --------
+
         if (level >= 5 && firstSpecial == null)
         {
-            // Choix aléatoire UNE FOIS
             firstSpecial = Random.value < 0.5f ? UpgradeType.Roll : UpgradeType.Sprint;
             secondSpecial = firstSpecial == UpgradeType.Roll ? UpgradeType.Sprint : UpgradeType.Roll;
         }
 
-        // -------- FORCER AU NIVEAU 5 --------
         if (level == 5 && firstSpecial.HasValue && !IsSpecialUnlocked(firstSpecial.Value))
         {
             forced = firstSpecial.Value;
         }
 
-        // -------- FORCER AU NIVEAU 15 --------
         if (level == 15 && secondSpecial.HasValue && !IsSpecialUnlocked(secondSpecial.Value))
         {
             forced = secondSpecial.Value;
         }
-
-        // -------- AJOUT AU POOL --------
 
         if (level >= 5 && firstSpecial.HasValue && !IsSpecialUnlocked(firstSpecial.Value))
             pool.Add(firstSpecial.Value);
@@ -65,7 +68,6 @@ public class GetUpgrade : MonoBehaviour
         if (level >= 15 && secondSpecial.HasValue && !IsSpecialUnlocked(secondSpecial.Value))
             pool.Add(secondSpecial.Value);
 
-        // -------- TIRAGE FINAL --------
 
         if (forced.HasValue)
         {
@@ -80,50 +82,19 @@ public class GetUpgrade : MonoBehaviour
             currentRewards[1] = PickRandomFrom(pool);
         }
 
-        Power1Description.text = currentRewards[0].ToString();
-        Power2Description.text = currentRewards[1].ToString();
+        Power1Description.text = upgradeDescriptions[currentRewards[0]];
+        Power2Description.text = upgradeDescriptions[currentRewards[1]];
     }
 
 
-    // ------------------------------
-    // OUTILS
-    // ------------------------------
 
     UpgradeType PickRandomFrom(List<UpgradeType> list)
     {
         return list[Random.Range(0, list.Count)];
     }
 
-    UpgradeType? GetRandomLockedSpecial()
-    {
-        List<UpgradeType> locked = new List<UpgradeType>();
 
-        if (!player.isRollUnlocked)
-            locked.Add(UpgradeType.Roll);
 
-        if (!player.isSprintUnlocked)
-            locked.Add(UpgradeType.Sprint);
-
-        if (locked.Count == 0)
-            return null;
-
-        return locked[Random.Range(0, locked.Count)];
-    }
-
-    UpgradeType? GetRemainingSpecial()
-    {
-        if (!player.isRollUnlocked)
-            return UpgradeType.Roll;
-
-        if (!player.isSprintUnlocked)
-            return UpgradeType.Sprint;
-
-        return null;
-    }
-
-    // ------------------------------
-    // UI / INPUT
-    // ------------------------------
 
     public void OnFirstUpgradeSelected()
     {
@@ -135,9 +106,9 @@ public class GetUpgrade : MonoBehaviour
         ApplyUpgrade(currentRewards[1]);
     }
 
-    // ------------------------------
-    // APPLICATION DES UPGRADES
-    // ------------------------------
+
+    // APPLying UPGRADES
+
 
     void ApplyUpgrade(UpgradeType upgrade)
     {
@@ -159,7 +130,7 @@ public class GetUpgrade : MonoBehaviour
                 break;
 
             case UpgradeType.FireRate:
-                player.shootDelay /= 1.4f;
+                player.shootDelay /= 1.3f;
                 break;
 
             case UpgradeType.MaxHealth:
@@ -184,9 +155,6 @@ public class GetUpgrade : MonoBehaviour
         return (type == UpgradeType.Roll && player.isRollUnlocked)
             || (type == UpgradeType.Sprint && player.isSprintUnlocked);
     }
-
-
-    // ------------------------------
 
     public void ResumeGame()
     {
