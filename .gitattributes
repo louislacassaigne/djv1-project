@@ -1,1 +1,33 @@
 * text=auto eol=lf
+
+*.cs text diff=csharp
+*.meta text merge=union
+*.unity binary
+*.prefab binary
+*.mat binary
+*.anim binary
+
+
+
+# Unity folders
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Rider / VS
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.user
+*.pidb
+*.booproj
+*.svd

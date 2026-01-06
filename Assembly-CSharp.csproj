@@ -72,12 +72,12 @@
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Movement.cs" />
     <Compile Include="Assets\Scripts\UIHealthBar.cs" />
     <Compile Include="Assets\Scripts\HealingItem.cs" />
     <Compile Include="Assets\Scripts\XPBar.cs" />
     <Compile Include="Assets\Scripts\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\UIKillCount.cs" />
-    <Compile Include="Assets\Scripts\Rolling.cs" />
     <Compile Include="Assets\Scripts\UpgradeType.cs" />
   </ItemGroup>
   <ItemGroup>

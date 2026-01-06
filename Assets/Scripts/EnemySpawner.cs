@@ -11,9 +11,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private EnemyCharacter enemyPrefab2;
     [SerializeField] private EnemyCharacter enemyPrefab3;
     [SerializeField] private EnemyCharacter enemyPrefab4;
-
-    [SerializeField] private int level = 1; // difficulté actuelle
-
     [SerializeField] private PlayerCharacter player;
 
 
@@ -42,9 +39,9 @@ public class EnemySpawner : MonoBehaviour
                 EnemyCharacter prefabToSpawn = PickEnemyPrefab();
 
                 Vector3 spawnPos = new Vector3(
-                    Random.Range(-12f, 12f),
+                    Random.Range(-20f, 20f),
                     0f,
-                    Random.Range(-12f, 12f)
+                    Random.Range(-20f, 20f)
                 );
 
                 var enemy = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity, transform);
@@ -108,4 +105,6 @@ public class EnemySpawner : MonoBehaviour
         _enemyCharacters.Remove(enemy);
         _enemyKilledCount++;
     }
+
+    
 }

@@ -14,7 +14,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     [SerializeField] public float bulletSpeed = 5f;
 
-    [SerializeField] private float rollSpeed = 8f;
+    [SerializeField] public float rollSpeed = 8f;
 
 
     [SerializeField] private Animator animator;
@@ -38,6 +38,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     public Vector3 RollDirection;
 
     private bool _isRolling = false;
+    public bool _isJumping = false;
 
     public bool isInMenu = false;
     private Camera _mainCamera;
@@ -59,6 +60,17 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
     protected void Update()
     {
+
+        if (!(this.transform.position.y == 0f))
+        {
+            this.transform.position = new Vector3(this.transform.position.x, 0f, this.transform.position.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && !_isJumping && !_isRolling)
+        {
+            animator.SetTrigger("jump");
+        }
+        
 
         // Direction de la caméra (sans inclinaison verticale)
         Vector3 cameraForward = cameraTransform.forward;
@@ -89,7 +101,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
         Vector3 inputDirection = new Vector3(inputX, 0f, inputZ);
 
-        if (!_isRolling && isRollUnlocked)
+        if (!_isRolling && isRollUnlocked && !_isJumping)
         {
             // Gauche
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Q))
@@ -174,7 +186,7 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
 
 
         _shootTimer -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && _shootTimer <= 0f && !Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetMouseButton(0) && _shootTimer <= 0f && !Input.GetKey(KeyCode.LeftShift) && !_isJumping && !_isRolling)
         {
             var direction = transform.rotation * Vector3.forward;
             var bullet = Instantiate(bulletPrefab, transform.position + direction * 0.5f, transform.rotation);
@@ -188,8 +200,6 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
     public void ApplyDamage(int value)
     {
         hitPoints -= value;
-        print(hitPoints + "/" + maxHitPoints);
-        print(hitPoints / maxHitPoints);
         if (hitPoints <= 0)
         {
             // Game Over
@@ -223,6 +233,8 @@ public class PlayerCharacter : MonoBehaviour, IDamageable
         isInMenu = true;
 
     }
+
+
 
 }
 

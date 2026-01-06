@@ -151,6 +151,7 @@ public class GetUpgrade : MonoBehaviour
 
             case UpgradeType.MoveSpeed:
                 player.speed *= 1.6f;
+                player.rollSpeed *= 1.6f;
                 break;
 
             case UpgradeType.BulletDamage:
@@ -158,7 +159,7 @@ public class GetUpgrade : MonoBehaviour
                 break;
 
             case UpgradeType.FireRate:
-                player.shootDelay /= 1.6f;
+                player.shootDelay /= 1.4f;
                 break;
 
             case UpgradeType.MaxHealth:
