@@ -39,9 +39,9 @@ public class EnemySpawner : MonoBehaviour
                 EnemyCharacter prefabToSpawn = PickEnemyPrefab();
 
                 Vector3 spawnPos = new Vector3(
-                    Random.Range(-20f, 20f),
+                    Random.Range(-23f, 23f),
                     0f,
-                    Random.Range(-20f, 20f)
+                    Random.Range(-23f, 23f)
                 );
 
                 var enemy = Instantiate(prefabToSpawn, spawnPos, Quaternion.identity, transform);

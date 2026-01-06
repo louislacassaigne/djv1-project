@@ -16,6 +16,8 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
 
     [SerializeField] private GameObject healingItemPrefab;
 
+    [SerializeField] private GameObject HealthBar;
+
     [SerializeField] public int XPReward = 60;
     private int _hitPoints = 0;
 
@@ -103,6 +105,8 @@ public class EnemyCharacter : MonoBehaviour, IDamageable
     public void ApplyDamage(int value)
     {
         _hitPoints -= value;
+        HealthBar.SetActive(true);
+
 
         if (_hitPoints <= 0)
         {
